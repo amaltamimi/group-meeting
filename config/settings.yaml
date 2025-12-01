@@ -1,0 +1,45 @@
+pubchem:
+  base_url: "https://pubchem.ncbi.nlm.nih.gov/rest/pug"
+  id_type: "name"  # options: name or cid
+  identifiers:
+    - aspirin
+    - caffeine
+    - ibuprofen
+    - acetaminophen
+    - diazepam
+  max_retries: 3
+  retry_backoff: 2
+
+fingerprints:
+  morgan:
+    radius: 2
+    n_bits: 2048
+  maccs:
+    enabled: true
+
+featurization:
+  descriptor_prefix: "desc_"
+  drop_invalid: true
+
+training:
+  test_size: 0.2
+  random_state: 42
+  cv_folds: 5
+  ridge:
+    alpha: 1.0
+  random_forest:
+    n_estimators: 200
+    max_depth: null
+
+paths:
+  raw_data: "data/raw/compounds.csv"
+  processed_data: "data/processed/processed.csv"
+  models_dir: "models"
+  reports_dir: "reports"
+
+evaluation:
+  molecules:
+    - warfarin
+    - nicotine
+    - lactose
+  report_file: "reports/model_performance.md"
